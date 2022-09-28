@@ -3,7 +3,7 @@
 ## This script will overwrite some of your home dotfiles, but it will make a backup of them in $KOKO/backup
 
 THIS="koko"
-KOKO=$(realpath "$0")
+KOKO=$(dirname "$0")
 
 ## FUNCTIONS
 
@@ -40,35 +40,38 @@ mkdirBackup () {
 
 vimConfig () {
    getAns "y" "n" "Do you want to configure vim?" "_VIM"
-   [ "$_VIM" != "y" ] && exit 0
-   # backup vim stuff
-   [ -f "$HOME"/.vimrc ] && cp "$HOME"/.vimrc "$BACKUP"
-   [ -d "$HOME"/.vim ] && cp -r "$HOME"/.vim "$BACKUP"
-   # overwrite $HOME
-   cp "$KOKO"/.vimrc "$HOME"
-   cp -r "$KOKO"/.vim "$HOME"/.vim
+   if [ "$_VIM" = "y" ]; then
+      # backup vim stuff
+      [ -f "$HOME"/.vimrc ] && cp "$HOME"/.vimrc "$BACKUP"
+      [ -d "$HOME"/.vim ] && cp -r "$HOME"/.vim "$BACKUP"
+      # overwrite $HOME
+      cp "$KOKO"/.vimrc "$HOME"
+      cp -r "$KOKO"/.vim "$HOME"/.vim
+   fi
 }
 
 bashConfig () {
    getAns "y" "n" "Do you want to configure bash?" "_BASH"
-   [ "$_BASH" != "y" ] && exit 0
-   # backup bash stuff
-   [ -f "$HOME"/.bashrc ] && cp "$HOME"/.bashrc "$BACKUP"
-   cp "$KOKO"/.bashrc "$HOME"
-   # overwrite $HOME
-   [ -f "$HOME"/.inputrc ] && cp "$HOME"/.inputrc "$BACKUP"
-   cp "$KOKO"/.inputrc "$HOME"
-   # updating $PATH
-   echo "export PATH=\"$KOKO:\$HOME/.local/bin:\$PATH\"" >> "$HOME"/.bashrc
+   if [ "$_BASH" = "y" ]; then
+      # backup bash stuff
+      [ -f "$HOME"/.bashrc ] && cp "$HOME"/.bashrc "$BACKUP"
+      cp "$KOKO"/.bashrc "$HOME"
+      # overwrite $HOME
+      [ -f "$HOME"/.inputrc ] && cp "$HOME"/.inputrc "$BACKUP"
+      cp "$KOKO"/.inputrc "$HOME"
+      # updating $PATH
+      echo "export PATH=\"$KOKO:\$HOME/.local/bin:\$PATH\"" >> "$HOME"/.bashrc
+   fi
 }
 
 gnomeConfig () {
    getAns "y" "n" "Are you in GNOME and want to configure it?" "_GNOME"
-   [ "$_GNOME" != "y" ] && exit 0
-   dconf load / < "$KOKO"/gnome/dconf.in
-   [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
-   cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
-   say "If you wish to store GNOME graphical configurations, run ./install.sh -B"
+   if [ "$_GNOME" = "y" ]; then
+      dconf load / < "$KOKO"/gnome/dconf.in
+      [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
+      cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
+      say "If you wish to store GNOME graphical configurations, run ./install.sh -B"
+   fi
 }
 
 gnomeBackup () {
@@ -81,15 +84,16 @@ gnomeBackup () {
 
 
 keyboard () {
-   getAns "y" "n" "Do you want to configure vim?" "_KEYBOARD"
-   [ "$_KEYBOARD" != "y" ] && exit 0
-   xset r rate 200 50
-   setxkbmap -option "caps:swapescape"
+   getAns "y" "n" "Do you want to configure the keyboard?" "_KEYBOARD"
+   if [ "$_KEYBOARD" = "y" ]; then
+      xset r rate 200 50
+      setxkbmap -option "caps:swapescape"
+   fi
 }
 
-main () {
+config () {
    # you will not run this as root
-   [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." ; exit 0
+   [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." && exit 0
    # welcome
    say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup.\""
    getAns "y" "n" "Do you wish to continue?" "_CONTINUE"
@@ -115,7 +119,7 @@ backup () {
 ##############################
 
 
-while getopts ":hB" option; do
+while getopts ":hB:" option; do
    case $option in
       h)
          displayHelp
@@ -130,5 +134,5 @@ while getopts ":hB" option; do
 done
 
 if [ "$OPTIND" = 1 ]; then
-   main
+   config && exit 0
 fi
