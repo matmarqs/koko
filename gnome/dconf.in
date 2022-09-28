@@ -1,0 +1,99 @@
+[apps/update-manager]
+check-new-release-ignore='jammy'
+
+[com/ubuntu/update-notifier]
+release-check-time=uint32 1664300013
+
+[org/gnome/control-center]
+last-panel='default-apps'
+
+[org/gnome/deja-dup]
+backend='google'
+prompt-check='2022-09-27T17:36:33+00'
+
+[org/gnome/deja-dup/file]
+migrated=true
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'br+thinkpad')]
+xkb-options=@as []
+
+[org/gnome/desktop/interface]
+gtk-im-module='gtk-im-context-simple'
+
+[org/gnome/desktop/notifications]
+application-children=['thunderbird', 'org-gnome-gedit']
+
+[org/gnome/desktop/notifications/application/org-gnome-gedit]
+application-id='org.gnome.gedit.desktop'
+
+[org/gnome/desktop/notifications/application/thunderbird]
+application-id='thunderbird.desktop'
+
+[org/gnome/desktop/privacy]
+disable-microphone=false
+report-technical-problems=true
+
+[org/gnome/desktop/sound]
+allow-volume-above-100-percent=false
+
+[org/gnome/desktop/wm/keybindings]
+close=['<Shift><Alt>q']
+move-to-workspace-1=['<Shift><Alt>exclam']
+move-to-workspace-2=['<Shift><Alt>at']
+move-to-workspace-3=['<Shift><Alt>numbersign']
+switch-to-workspace-1=['<Alt>1']
+switch-to-workspace-2=['<Alt>2']
+switch-to-workspace-3=['<Alt>3']
+toggle-maximized=['<Alt>f']
+
+[org/gnome/evince/default]
+window-ratio=(1.5287026522151068, 1.1854280250389007)
+
+[org/gnome/evolution-data-server]
+migrated=true
+network-monitor-gio-name=''
+
+[org/gnome/gedit/plugins]
+active-plugins=['modelines', 'time', 'filebrowser', 'spell', 'docinfo']
+
+[org/gnome/gedit/plugins/filebrowser]
+root='file:///'
+tree-view=true
+virtual-root='file:///home/11224185'
+
+[org/gnome/gedit/preferences/ui]
+show-tabs-mode='auto'
+
+[org/gnome/gedit/state/window]
+bottom-panel-size=140
+side-panel-active-page='GeditWindowDocumentsPanel'
+side-panel-size=200
+size=(900, 700)
+state=87168
+
+[org/gnome/nautilus/list-view]
+default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency', 'starred', 'detailed_type']
+default-visible-columns=['name', 'size', 'date_modified', 'starred']
+
+[org/gnome/nautilus/preferences]
+default-folder-viewer='icon-view'
+search-filter-time-type='last_modified'
+
+[org/gnome/settings-daemon/plugins/media-keys]
+terminal=['<Alt>Return']
+
+[org/gnome/shell]
+command-history=['terminal', '']
+
+[org/gnome/system/location]
+enabled=false
+
+[org/gnome/terminal/legacy]
+new-terminal-mode='tab'
+
+[org/gnome/terminal/legacy/keybindings]
+close-tab='<Primary>w'
+move-tab-left='<Alt>k'
+move-tab-right='<Alt>j'
+new-tab='<Primary>t'

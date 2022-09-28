@@ -1,0 +1,13 @@
+[Added Associations]
+text/x-python=vim.desktop;
+application/x-shellscript=vim.desktop;
+text/x-makefile=vim.desktop;
+text/plain=vim.desktop;
+
+[Removed Associations]
+application/x-shellscript=emacs.desktop;emacs-term.desktop;
+text/x-makefile=emacs.desktop;emacs-term.desktop;
+text/plain=org.gnome.gedit.desktop;
+
+[Default Applications]
+text/plain=vim.desktop
