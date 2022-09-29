@@ -55,6 +55,5 @@ cpp () {
 # environmental variables
 export LESS="-R --use-color -Dd+G\$-Du+r\$-DS+kY\$-DE+Y\$-DP+Y"
 export MANPAGER="less -R --use-color -Dd+G -Du+r -DS+kY -DE+Y -DP+Y"
-export PATH="$HOME/.local/bin:$PATH"
 export EDITOR="vim"
 export BROWSER="firefox"
