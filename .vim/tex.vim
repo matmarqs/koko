@@ -14,7 +14,7 @@ map $ g$
 nnoremap <Leader>c :w<CR>:!pdflatex<Space>-shell-escape<Space>%<CR><CR>
 "nnoremap <LocalLeader>c :w<CR>:!pdflatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>
 nnoremap <Leader>C :w<CR>:!make<Space>clean<CR><CR>
-nnoremap <Leader>o :!zathura --fork %:t:r.pdf<CR><CR>
+nnoremap <Leader>o :!evince<Space>%:t:r.pdf<Space>&<CR><CR>
 
 " insert mode
 inoremap <Leader>e $$<++><Esc>F$i
@@ -43,3 +43,5 @@ inoremap <Leader>m21 \begin{pmatrix}<CR><Space>\\<Space><++><CR>\end{pmatrix}<Es
 inoremap <Leader>m22 \begin{pmatrix}<CR>& <++> \\<CR><++> & <++><CR>\end{pmatrix}<Esc><<A<CR><++><Esc>3k00i<Space><Esc>i
 inoremap <Leader>m33 \begin{pmatrix}<CR>& <++> & <++> \\<CR><++> & <++> & <++> \\<CR><++> & <++> & <++> \\<CR>\end{pmatrix}<Esc><<A<CR><++><Esc>4k00i<Space><Esc>i
 inoremap <Leader>F \begin{frame}<CR><CR>\end{frame}<CR><++><Esc>2ki
+inoremap <Leader>mi \begin{minted}[bgcolor=bg]{py}<CR><CR>\end{minted}<CR><++><Esc>2ki
+inoremap <Leader>M \mintinline{py}{}<Esc>i

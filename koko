@@ -3,7 +3,7 @@
 ## This script will overwrite some of your home dotfiles, but it will make a backup of them in $KOKO/backup
 
 THIS="koko"
-KOKO=$(dirname "$0")
+KOKO=$(realpath "$(dirname "$0")")
 
 ## FUNCTIONS
 
@@ -60,7 +60,8 @@ bashConfig () {
       [ -f "$HOME"/.inputrc ] && cp "$HOME"/.inputrc "$BACKUP"
       cp "$KOKO"/.inputrc "$HOME"
       # updating $PATH
-      echo "export PATH=\"$KOKO:\$HOME/.local/bin:\$PATH\"" >> "$HOME"/.bashrc
+      echo "export KOKO=$KOKO" >> "$HOME"/.bashrc
+      echo "export PATH=\"\$KOKO:\$HOME/.local/bin:\$PATH\"" >> "$HOME"/.bashrc
    fi
 }
 
