@@ -3,6 +3,8 @@ text/x-python=vim.desktop;
 application/x-shellscript=vim.desktop;
 text/x-makefile=vim.desktop;
 text/plain=vim.desktop;
+text/x-csrc=vim.desktop;
+text/x-tex=vim.desktop;
 
 [Removed Associations]
 application/x-shellscript=emacs.desktop;emacs-term.desktop;
@@ -11,3 +13,6 @@ text/plain=org.gnome.gedit.desktop;
 
 [Default Applications]
 text/plain=vim.desktop
+text/x-csrc=vim.desktop
+text/x-tex=vim.desktop
+text/x-python=vim.desktop

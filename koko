@@ -1,6 +1,8 @@
 #!/bin/sh
 
-## This script will overwrite some of your home dotfiles, but it will make a backup of them in $KOKO/backup
+## This script will overwrite some of your home dotfiles, but it will make a backup of them in $KOKO/backup.
+# TODO: add koko -y option to say "yes" to every question.
+#       give warning when backup is really altering the files>
 
 THIS="koko"
 KOKO=$(realpath "$(dirname "$0")")
@@ -87,7 +89,7 @@ gnomeBackup () {
 keyboard () {
    getAns "y" "n" "Do you want to configure the keyboard?" "_KEYBOARD"
    if [ "$_KEYBOARD" = "y" ]; then
-      xset r rate 200 50
+      xset r rate 250 60
       setxkbmap -option "caps:swapescape"
    fi
 }
@@ -120,7 +122,7 @@ backup () {
 ##############################
 
 
-while getopts ":hB:" option; do
+while getopts ":hB" option; do
    case $option in
       h)
          displayHelp

@@ -4,8 +4,23 @@ check-new-release-ignore='jammy'
 [com/ubuntu/update-notifier]
 release-check-time=uint32 1664300013
 
+[org/gnome/calculator]
+accuracy=9
+angle-units='degrees'
+base=10
+button-mode='basic'
+number-format='automatic'
+show-thousands=false
+show-zeroes=false
+source-currency=''
+source-units='degree'
+target-currency=''
+target-units='radian'
+window-position=(172, 127)
+word-size=64
+
 [org/gnome/control-center]
-last-panel='default-apps'
+last-panel='applications'
 
 [org/gnome/deja-dup]
 backend='google'
@@ -13,6 +28,9 @@ prompt-check='2022-09-27T17:36:33+00'
 
 [org/gnome/deja-dup/file]
 migrated=true
+
+[org/gnome/desktop/a11y/magnifier]
+mag-factor=8.0
 
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'br+thinkpad')]
@@ -22,7 +40,10 @@ xkb-options=@as []
 gtk-im-module='gtk-im-context-simple'
 
 [org/gnome/desktop/notifications]
-application-children=['thunderbird', 'org-gnome-gedit']
+application-children=['thunderbird', 'org-gnome-gedit', 'firefox']
+
+[org/gnome/desktop/notifications/application/firefox]
+application-id='firefox.desktop'
 
 [org/gnome/desktop/notifications/application/org-gnome-gedit]
 application-id='org.gnome.gedit.desktop'
@@ -38,14 +59,56 @@ report-technical-problems=true
 allow-volume-above-100-percent=false
 
 [org/gnome/desktop/wm/keybindings]
+activate-window-menu=@as []
+begin-move=@as []
+begin-resize=@as []
 close=['<Shift><Alt>q']
+cycle-group=@as []
+cycle-group-backward=@as []
+cycle-panels=@as []
+cycle-panels-backward=@as []
+cycle-windows=['<Alt>Tab']
+cycle-windows-backward=['<Shift><Alt>Tab']
+maximize=@as []
+minimize=['<Alt>period']
+move-to-monitor-down=@as []
+move-to-monitor-left=@as []
+move-to-monitor-right=@as []
+move-to-monitor-up=@as []
 move-to-workspace-1=['<Shift><Alt>exclam']
 move-to-workspace-2=['<Shift><Alt>at']
 move-to-workspace-3=['<Shift><Alt>numbersign']
+move-to-workspace-4=['<Shift><Alt>dollar']
+move-to-workspace-down=['<Shift><Alt>j']
+move-to-workspace-last=@as []
+move-to-workspace-up=['<Shift><Alt>k']
+panel-main-menu=@as []
+panel-run-dialog=['<Alt>F2']
+show-desktop=@as []
+switch-applications=@as []
+switch-applications-backward=@as []
+switch-group=@as []
+switch-group-backward=@as []
+switch-input-source=@as []
+switch-input-source-backward=@as []
+switch-panels=@as []
+switch-panels-backward=@as []
 switch-to-workspace-1=['<Alt>1']
 switch-to-workspace-2=['<Alt>2']
 switch-to-workspace-3=['<Alt>3']
-toggle-maximized=['<Alt>f']
+switch-to-workspace-4=['<Alt>4']
+switch-to-workspace-down=['<Alt>j']
+switch-to-workspace-last=['<Alt>End']
+switch-to-workspace-up=['<Alt>k']
+switch-windows=@as []
+switch-windows-backward=@as []
+toggle-fullscreen=['<Alt>f']
+toggle-maximized=['<Alt>m']
+unmaximize=['<Shift><Alt>n']
+
+[org/gnome/eog/view]
+background-color='rgb(0,0,0)'
+use-background-color=true
 
 [org/gnome/evince/default]
 window-ratio=(1.5287026522151068, 1.1854280250389007)
@@ -72,6 +135,13 @@ side-panel-size=200
 size=(900, 700)
 state=87168
 
+[org/gnome/mutter/keybindings]
+toggle-tiled-left=['<Shift><Alt>h']
+toggle-tiled-right=['<Shift><Alt>l']
+
+[org/gnome/mutter/wayland/keybindings]
+restore-shortcuts=@as []
+
 [org/gnome/nautilus/list-view]
 default-column-order=['name', 'size', 'type', 'owner', 'group', 'permissions', 'where', 'date_modified', 'date_modified_with_time', 'date_accessed', 'recency', 'starred', 'detailed_type']
 default-visible-columns=['name', 'size', 'date_modified', 'starred']
@@ -80,11 +150,38 @@ default-visible-columns=['name', 'size', 'date_modified', 'starred']
 default-folder-viewer='icon-view'
 search-filter-time-type='last_modified'
 
+[org/gnome/nautilus/window-state]
+initial-size=(890, 550)
+maximized=false
+
 [org/gnome/settings-daemon/plugins/media-keys]
+area-screenshot=['Print']
+area-screenshot-clip=@as []
+calculator=@as []
+home=['<Shift><Alt>Return']
+logout=['<Primary><Shift><Alt>End']
+magnifier=@as []
+magnifier-zoom-in=@as []
+magnifier-zoom-out=@as []
+screencast=@as []
+screenreader=@as []
+screensaver=@as []
+screenshot=['<Alt>Print']
+screenshot-clip=@as []
 terminal=['<Alt>Return']
+window-screenshot=['<Shift>Print']
+window-screenshot-clip=@as []
+www=['<Shift><Alt>w']
 
 [org/gnome/shell]
-command-history=['terminal', '']
+command-history=['terminal', '', 'ls', 'firefox']
+
+[org/gnome/shell/keybindings]
+focus-active-notification=@as []
+open-application-menu=@as []
+toggle-application-view=@as []
+toggle-message-tray=@as []
+toggle-overview=['<Alt>d']
 
 [org/gnome/system/location]
 enabled=false
@@ -94,6 +191,43 @@ new-terminal-mode='tab'
 
 [org/gnome/terminal/legacy/keybindings]
 close-tab='<Primary>w'
-move-tab-left='<Alt>k'
-move-tab-right='<Alt>j'
+close-window='disabled'
+copy='<Super>c'
+detach-tab='<Primary>x'
+find='disabled'
+find-clear='disabled'
+find-next='disabled'
+find-previous='disabled'
+move-tab-left='<Primary><Shift>k'
+move-tab-right='<Primary><Shift>j'
 new-tab='<Primary>t'
+new-window='disabled'
+next-tab='<Primary>j'
+paste='<Super>v'
+prev-tab='<Primary>k'
+switch-to-tab-1='<Primary>1'
+switch-to-tab-10='disabled'
+switch-to-tab-2='<Primary>2'
+switch-to-tab-3='<Primary>3'
+switch-to-tab-4='<Primary>4'
+switch-to-tab-5='<Primary>5'
+switch-to-tab-6='<Primary>6'
+switch-to-tab-7='<Primary>7'
+switch-to-tab-8='<Primary>8'
+switch-to-tab-9='<Primary>9'
+zoom-in='<Primary>equal'
+zoom-normal='<Primary>BackSpace'
+
+[org/gtk/settings/file-chooser]
+date-format='regular'
+location-mode='path-bar'
+show-hidden=true
+show-size-column=true
+show-type-column=true
+sidebar-width=167
+sort-column='name'
+sort-directories-first=true
+sort-order='ascending'
+type-format='category'
+window-position=(461, 27)
+window-size=(1203, 902)
