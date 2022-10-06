@@ -20,6 +20,11 @@ configureIPython () {
    cp "$PYDIR"/00-functions.py "$IPYTHONDIR/profile_default/startup"
 }
 
+configureRanger () {
+   [ ! -d "$HOME"/.config ] && mkdir -p "$HOME"/.config
+   cp "$PYDIR"/rc.conf "$HOME"/.config
+}
+
 # check if pip is installed, if not we install it
 if python3 -m pip --version >/dev/null 2>&1; then
    echo "pip is already installed."
