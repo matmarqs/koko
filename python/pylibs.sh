@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PYDIR=$(realpath "$(dirname "$0")")
+[ -z "$KOKO" ] && KOKO=$(realpath "$PYDIR/..")
 [ -z "$PYTHONPATH" ] && PYTHONPATH="$KOKO/python"  # this is important for the module python3-distutils
 
 getAns () {

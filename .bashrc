@@ -12,10 +12,10 @@
 #BRED='\[\e[1;31m\]'
 #BGRED='\[\e[41m\]'
 GREEN='\[\e[0;32m\]'
-#BGREEN='\[\e[1;32m\]'
+BGREEN='\[\e[1;32m\]'
 #BGGREEN='\[\e[1;32m\]'
 #YELLOW='\[\e[0;33m\]'
-#BYELLOW='\[\e[1;33m\]'
+BYELLOW='\[\e[1;33m\]'
 #BGYELLOW='\[\e[1;33m\]'
 #BLUE='\[\e[0;34m\]'
 BBLUE='\[\e[1;34m\]'
@@ -32,6 +32,7 @@ WHITE='\[\e[0;37m\]'
 
 # prompt (colors are defined in .bash_profile)
 PS1="${BBLUE}[${BCYAN}λ ${MAGENTA}\W${BBLUE}]${GREEN}\$ ${WHITE}"
+#PS1="${BBLUE}[${BCYAN}\u${BGREEN}@${BYELLOW}\h ${MAGENTA}\W${BBLUE}]${GREEN}\$ ${WHITE}"
 
 # vi mode
 set -o vi

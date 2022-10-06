@@ -159,6 +159,10 @@ configYes () {
    say "Installation finished." ; echo
 }
 
+configPython () {
+   "$KOKO"/python/pylibs.sh
+}
+
 backup () {
    getAns "y" "n" "Do you wish to backup ~/.vimrc and ~/.vim files?" "_BACKUPVIM"
    [ "$_BACKUPVIM" = "y" ] && cp -r "$HOME"/.vim "$HOME"/.vimrc "$KOKO"
@@ -188,7 +192,7 @@ while getopts ":hybB" option; do
          displayHelp && exit 0
          exit 1;;
       y)
-         configYes && exit 0
+         configYes && configPython && exit 0
          exit 1;;
       b)
          backup && exit 0
@@ -203,6 +207,6 @@ while getopts ":hybB" option; do
 done
 
 if [ "$OPTIND" = 1 ]; then
-   config && exit 0
+   config && configPython && exit 0
    exit 1
 fi
