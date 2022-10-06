@@ -32,7 +32,9 @@ displayHelp () {
    echo
    echo "OPTIONS"
    echo "-h    Print this help message."
-   echo "-B    Backup files to this git directory \$KOKO."
+   echo "-y    Run as default, but say yes to every question."
+   echo "-b    Backup files to this git directory \$KOKO."
+   echo "-B    Backup as \"-b\", but say yes to every question."
 }
 
 mkdirBackup () {
