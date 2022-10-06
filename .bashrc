@@ -43,21 +43,6 @@ c () {
    gcc -g -Wall -O2 "$1" -lm -o "$PROGDIR"/a.out #&& "$PROGDIR"/a.out
 }
 
-## Less Colors for Man Pages
-export LESS_TERMCAP_md=$'\E[1;38;5;39m'  # begin bold
-export LESS_TERMCAP_us=$'\E[4;38;5;51m'  # underline
-export LESS_TERMCAP_so=$'\E[30;42m'      # highlighting: green
-export LESS_TERMCAP_me=$'\E[0;38;5;9m'   # end mode
-export LESS_TERMCAP_mb=$'\E[0m'          # begin blinking
-export LESS_TERMCAP_ue=$'\E[0m'          # end underline
-export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
-export LESS="-R"
-export MANPAGER="less -R"
-
-# environmental variables
-export EDITOR="vim"
-export BROWSER="firefox"
-
 # aliases
 # colors for commands
 alias \
@@ -82,4 +67,23 @@ alias \
     pg="ps aux | grep -i" \
     chx="chmod +x" \
     ka="killall" \
-    p="ping -c 3 google.com"
+    p="ping -c 3 google.com" \
+    cptex="cp \$KOKO/templates/*.tex ." \
+    cppy="cp \$KOKO/templates/*.py ."
+
+## Less Colors for Man Pages
+export LESS_TERMCAP_md=$'\E[1;38;5;39m'  # begin bold
+export LESS_TERMCAP_us=$'\E[4;38;5;51m'  # underline
+export LESS_TERMCAP_so=$'\E[30;42m'      # highlighting: green
+export LESS_TERMCAP_me=$'\E[0;38;5;9m'   # end mode
+export LESS_TERMCAP_mb=$'\E[0m'          # begin blinking
+export LESS_TERMCAP_ue=$'\E[0m'          # end underline
+export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
+export LESS="-R"
+export MANPAGER="less -R"
+
+# environmental variables
+export RANGER_LOAD_DEFAULT_RC="FALSE"  # ranger config file
+export IPYTHONDIR="${XDG_DATA_HOME:-$HOME/.local/share}/ipython"
+export EDITOR="vim"
+export BROWSER="firefox"

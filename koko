@@ -74,6 +74,8 @@ gnomeConfig () {
       [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
       cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
       say "If you wish to store GNOME graphical configurations, run ./install.sh -B"
+      echo "export TERMINAL=\"gnome-terminal\"" >> "$HOME"/.bashrc
+      echo "export TERMCMD=\"gnome-terminal\"" >> "$HOME"/.bashrc
    fi
 }
 

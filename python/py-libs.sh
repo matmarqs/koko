@@ -1,6 +1,6 @@
 #!/bin/sh
 
-THISDIR=$(realpath "$(dirname "$0")")
+PYDIR=$(realpath "$(dirname "$0")")
 
 getAns () {
    # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
@@ -13,12 +13,19 @@ getAns () {
    fi
 }
 
+configureIPython () {
+   [ -z "$IPYTHONDIR" ] && IPYTHONDIR="${XDG_DATA_HOME:-$HOME/.local/share}/.local/share/ipython"
+   mkdir -p "$IPYTHONDIR/profile_default/startup"
+   cp "$PYDIR"/ipython_config.py "$IPYTHONDIR/profile_default"
+   cp "$PYDIR"/00-functions.py "$IPYTHONDIR/profile_default/startup"
+}
+
 # check if pip is installed, if not we install it
 if python3 -m pip --version >/dev/null 2>&1; then
    echo "pip is already installed."
 else
    echo "pip is not installed. We are going to install it."
-   "$THISDIR"/get-pip.py
+   "$PYDIR"/get-pip.py
 fi
 
 # python packages for the shell
