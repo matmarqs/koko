@@ -1,6 +1,7 @@
 #!/bin/sh
 
 PYDIR=$(realpath "$(dirname "$0")")
+[ -z "$PYTHONPATH" ] && PYTHONPATH="$KOKO/python"  # this is important for the module python3-distutils
 
 getAns () {
    # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
@@ -30,19 +31,23 @@ if python3 -m pip --version >/dev/null 2>&1; then
    echo "pip is already installed."
 else
    echo "pip is not installed. We are going to install it."
-   "$PYDIR"/get-pip.py
+   if "$PYDIR"/get-pip.py --user; then # here we are using the variable $PYTHONPATH
+      echo "pip was installed succesfully."
+   else
+      echo "There was an error when installing pip." && exit 1
+   fi
 fi
 
 # python packages for the shell
 getAns "y" "n" "Install ranger and ipython?" "_PYSHELL"
 if [ "$_PYSHELL" = "y" ]; then
    echo "Installing ranger and ipython..."
-   pip install ranger-fm ipython pygments
+   pip3 install ranger-fm ipython && configureRanger && configureIPython
 fi
 
 # python packages for scientific computing
 getAns "y" "n" "Install numpy, scipy, matplotlib and sympy?" "_PYSCI"
 if [ "$_PYSCI" = "y" ]; then
    echo "Installing numpy, scipy, matplotlib and sympy..."
-   pip install numpy scipy matplotlib sympy
+   pip3 install numpy scipy matplotlib sympy
 fi

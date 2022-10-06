@@ -57,6 +57,8 @@ alias \
 # abbreviations
 alias \
     py="python3" \
+    python="python3" \
+    pip="pip3" \
     v="vim" \
     vi="vim" \
     nvi="vim" \

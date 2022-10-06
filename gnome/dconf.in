@@ -20,7 +20,7 @@ window-position=(172, 127)
 word-size=64
 
 [org/gnome/control-center]
-last-panel='applications'
+last-panel='ubuntu'
 
 [org/gnome/deja-dup]
 backend='google'
@@ -32,12 +32,20 @@ migrated=true
 [org/gnome/desktop/a11y/magnifier]
 mag-factor=8.0
 
+[org/gnome/desktop/background]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file://WALLPAPERPLACEHOLDER'
+primary-color='#000000'
+secondary-color='#000000'
+
 [org/gnome/desktop/input-sources]
 sources=[('xkb', 'br+thinkpad')]
 xkb-options=@as []
 
 [org/gnome/desktop/interface]
 gtk-im-module='gtk-im-context-simple'
+gtk-theme='Yaru-dark'
 
 [org/gnome/desktop/notifications]
 application-children=['thunderbird', 'org-gnome-gedit', 'firefox']
@@ -54,6 +62,13 @@ application-id='thunderbird.desktop'
 [org/gnome/desktop/privacy]
 disable-microphone=false
 report-technical-problems=true
+
+[org/gnome/desktop/screensaver]
+color-shading-type='solid'
+picture-options='zoom'
+picture-uri='file://WALLPAPERPLACEHOLDER'
+primary-color='#000000'
+secondary-color='#000000'
 
 [org/gnome/desktop/sound]
 allow-volume-above-100-percent=false
@@ -111,7 +126,17 @@ background-color='rgb(0,0,0)'
 use-background-color=true
 
 [org/gnome/evince/default]
-window-ratio=(1.5287026522151068, 1.1854280250389007)
+continuous=true
+dual-page=false
+dual-page-odd-left=false
+enable-spellchecking=true
+fullscreen=false
+inverted-colors=false
+show-sidebar=false
+sidebar-page='links'
+sidebar-size=148
+sizing-mode='automatic'
+window-ratio=(1.5287026522151068, 0.87778688427229212)
 
 [org/gnome/evolution-data-server]
 migrated=true
@@ -158,7 +183,7 @@ maximized=false
 area-screenshot=['Print']
 area-screenshot-clip=@as []
 calculator=@as []
-home=['<Shift><Alt>Return']
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']
 logout=['<Primary><Shift><Alt>End']
 magnifier=@as []
 magnifier-zoom-in=@as []
@@ -173,8 +198,18 @@ window-screenshot=['<Shift>Print']
 window-screenshot-clip=@as []
 www=['<Shift><Alt>w']
 
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Shift><Alt>Return'
+command='gnome-terminal -- python3 HOMEPLACEHOLDER/.local/bin/ranger'
+name='ranger'
+
 [org/gnome/shell]
-command-history=['terminal', '', 'ls', 'firefox']
+command-history=['terminal', '', 'ls', 'firefox', 'gnome-terminal -- ranger']
+
+[org/gnome/shell/extensions/dash-to-dock]
+dock-fixed=true
+dock-position='LEFT'
+preferred-monitor=0
 
 [org/gnome/shell/keybindings]
 focus-active-notification=@as []
@@ -218,6 +253,11 @@ switch-to-tab-9='<Primary>9'
 zoom-in='<Primary>equal'
 zoom-normal='<Primary>BackSpace'
 
+[org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+exit-action='close'
+login-shell=false
+use-custom-command=false
+
 [org/gtk/settings/file-chooser]
 date-format='regular'
 location-mode='path-bar'
@@ -229,5 +269,5 @@ sort-column='name'
 sort-directories-first=true
 sort-order='ascending'
 type-format='category'
-window-position=(461, 27)
+window-position=(395, 79)
 window-size=(1203, 902)

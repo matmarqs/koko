@@ -41,7 +41,11 @@ mkdirBackup () {
 }
 
 vimConfig () {
-   getAns "y" "n" "Do you want to configure vim?" "_VIM"
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you want to configure vim?" "_VIM"
+   else
+      _VIM="$1"
+   fi
    if [ "$_VIM" = "y" ]; then
       # backup vim stuff
       [ -f "$HOME"/.vimrc ] && cp "$HOME"/.vimrc "$BACKUP"
@@ -53,7 +57,11 @@ vimConfig () {
 }
 
 bashConfig () {
-   getAns "y" "n" "Do you want to configure bash?" "_BASH"
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you want to configure bash?" "_BASH"
+   else
+      _BASH="$1"
+   fi
    if [ "$_BASH" = "y" ]; then
       # backup bash stuff
       [ -f "$HOME"/.bashrc ] && cp "$HOME"/.bashrc "$BACKUP"
@@ -62,25 +70,37 @@ bashConfig () {
       [ -f "$HOME"/.inputrc ] && cp "$HOME"/.inputrc "$BACKUP"
       cp "$KOKO"/.inputrc "$HOME"
       # updating $PATH
-      echo "export KOKO=$KOKO" >> "$HOME"/.bashrc
-      echo "export PATH=\"\$KOKO:\$HOME/.local/bin:\$PATH\"" >> "$HOME"/.bashrc
+      { echo "export KOKO=$KOKO";
+        echo "export PATH=\"\$HOME/.local/bin:\$PATH\"";
+        echo "export PYTHONPATH=\"\$KOKO/python\""; } >> "$HOME"/.bashrc
    fi
 }
 
 gnomeConfig () {
-   getAns "y" "n" "Are you in GNOME and want to configure it?" "_GNOME"
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Are you in GNOME and want to configure it?" "_GNOME"
+   else
+      _GNOME="$1"
+   fi
    if [ "$_GNOME" = "y" ]; then
+      sed -i "s|HOMEPLACEHOLDER|${HOME}|" dconf.in
+      WALLPAPER="$(realpath "$(find "$KOKO"/gnome -name "wallpaper.*" | sed 1q)")"
+      sed -i "s|WALLPAPERPLACEHOLDER|${WALLPAPER}|" dconf.in
       dconf load / < "$KOKO"/gnome/dconf.in
       [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
       cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
-      say "If you wish to store GNOME graphical configurations, run ./install.sh -B"
+      say "If you wish to store GNOME configurations, run ./koko -B"
       echo "export TERMINAL=\"gnome-terminal\"" >> "$HOME"/.bashrc
       echo "export TERMCMD=\"gnome-terminal\"" >> "$HOME"/.bashrc
    fi
 }
 
 gnomeBackup () {
-   getAns "y" "n" "Do you wish to backup GNOME graphical configurations?" "_BACKUPGNOME"
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you wish to backup GNOME graphical configurations?" "_BACKUPGNOME"
+   else
+      _BACKUPGNOME="$1"
+   fi
    if [ "$_BACKUPGNOME" = "y" ]; then
       dconf dump / > "$KOKO"/gnome/dconf.in
       [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$KOKO"/gnome/mimeapps.list
@@ -89,7 +109,11 @@ gnomeBackup () {
 
 
 keyboard () {
-   getAns "y" "n" "Do you want to configure the keyboard?" "_KEYBOARD"
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you want to configure the keyboard?" "_KEYBOARD"
+   else
+      _KEYBOARD="$1"
+   fi
    if [ "$_KEYBOARD" = "y" ]; then
       xset r rate 250 60
       setxkbmap -option "caps:swapescape"
@@ -111,6 +135,28 @@ config () {
    say "Installation finished." ; echo
 }
 
+# the same as "config", but say "yes" to every question
+configYes () {
+   # you will not run this as root
+   [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." && exit 0
+   # welcome
+   say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup.\""
+   say "Since you included the \"-y\" option, we say \"yes\" to every question."
+   _CONTINUE="y"
+   [ "$_CONTINUE" != "y" ] && say "Nothing done." && exit 0
+   mkdirBackup
+   echo "Making backup..."
+   vimConfig "y"
+   echo "Configuring vim..."
+   bashConfig "y"
+   echo "Configuring bash..."
+   gnomeConfig "y"
+   echo "Configuring GNOME..."
+   keyboard "y"
+   echo "Configuring keyboard..."
+   say "Installation finished." ; echo
+}
+
 backup () {
    getAns "y" "n" "Do you wish to backup ~/.vimrc and ~/.vim files?" "_BACKUPVIM"
    [ "$_BACKUPVIM" = "y" ] && cp -r "$HOME"/.vim "$HOME"/.vimrc "$KOKO"
@@ -120,18 +166,34 @@ backup () {
    say "Backup complete." ; echo
 }
 
+# same as "backup", but say "yes" to every question
+backupYes () {
+   _BACKUPVIM="y" && echo "Making backup of vim files..."
+   [ "$_BACKUPVIM" = "y" ] && cp -r "$HOME"/.vim "$HOME"/.vimrc "$KOKO"
+   _BACKUPBASH="y" && echo "Making backup of bash files..."
+   [ "$_BACKUPBASH" = "y" ] && cp -r "$HOME"/.bashrc "$HOME"/.inputrc "$KOKO"
+   gnomeBackup "y"
+   say "Backup complete." ; echo
+}
+
 
 ##############################
 
 
-while getopts ":hB" option; do
+while getopts ":hybB" option; do
    case $option in
       h)
-         displayHelp
-         exit 0;;
+         displayHelp && exit 0
+         exit 1;;
+      y)
+         configYes && exit 0
+         exit 1;;
+      b)
+         backup && exit 0
+         exit 1;;
       B)
-         backup
-         exit 0;;
+         backupYes && exit 0
+         exit 1;;
       \?) # invalid option
          echo "$THIS: invalid option." >&2
          exit 1;;
@@ -140,4 +202,5 @@ done
 
 if [ "$OPTIND" = 1 ]; then
    config && exit 0
+   exit 1
 fi
