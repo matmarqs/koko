@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# you can write here environmental variables for koko to read
+MYNAME="Mateus Marques" # user.name in git config
+MYEMAIL="mateusmarques2001@usp.br"  # user.email in git config

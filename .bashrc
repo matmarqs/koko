@@ -12,10 +12,10 @@
 #BRED='\[\e[1;31m\]'
 #BGRED='\[\e[41m\]'
 GREEN='\[\e[0;32m\]'
-BGREEN='\[\e[1;32m\]'
+#BGREEN='\[\e[1;32m\]'
 #BGGREEN='\[\e[1;32m\]'
 #YELLOW='\[\e[0;33m\]'
-BYELLOW='\[\e[1;33m\]'
+#BYELLOW='\[\e[1;33m\]'
 #BGYELLOW='\[\e[1;33m\]'
 #BLUE='\[\e[0;34m\]'
 BBLUE='\[\e[1;34m\]'
@@ -69,6 +69,8 @@ alias \
     mc="make clean" \
     pg="ps aux | grep -i" \
     chx="chmod +x" \
+    clip="xclip -i -selection clipboard" \
+    tk="cat \$KOKO/token" \
     ka="killall" \
     p="ping -c 3 google.com" \
     cptex="cp \$KOKO/templates/*.tex ." \

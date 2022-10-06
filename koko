@@ -1,11 +1,10 @@
 #!/bin/sh
 
-## This script will overwrite some of your home dotfiles, but it will make a backup of them in $KOKO/backup.
-# TODO: add koko -y option to say "yes" to every question.
-#       give warning when backup is really altering the files>
+# TODO: give warning when backup is really altering the files.
 
 THIS="koko"
 KOKO=$(realpath "$(dirname "$0")")
+. "$KOKO"/koko_variables
 
 ## FUNCTIONS
 
@@ -122,6 +121,40 @@ keyboard () {
    fi
 }
 
+configPython () {
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you want to install python3-pip?" "_PIP"
+   else
+      _PIP="$1"
+   fi
+   [ "$_PIP" != "y" ] && echo "We did not install pip or any python libraries." && exit 0
+   "$KOKO"/python/pylibs.sh
+}
+
+configBinaries () {
+   if [ -z "$1" ]; then
+      getAns "y" "n" "Do you want to get some dev binaries?" "_BINARIES"
+   else
+      _BINARIES="$1"
+   fi
+   if [ "$_BINARIES" = "y" ]; then
+      [ ! -d "$HOME"/.local/bin ] && mkdir -p "$HOME"/.local/bin
+      mkdir -p "$KOKO"/root && cd "$KOKO"/root || exit 1
+      apt-get download xclip && dpkg -x xclip*.deb "$KOKO"/root
+      apt-get download git && dpkg -x git*.deb "$KOKO"/root
+      for file in "$KOKO"/root/usr/bin/*; do
+         # copy all files that are not symlinks and are executable
+         [ ! -L "$file" ] && [ -x "$file" ] && cp "$file" "$HOME"/.local/bin
+      done
+      # configuring git
+      [ -z "$MYNAME" ] && MYNAME="Mateus Marques"
+      [ -z "$MYEMAIL" ] && MYEMAIL="mateusmarques2001@usp.br"
+      "$HOME"/.local/bin/git config --global user.name "$MYNAME"
+      "$HOME"/.local/bin/git config --global user.name "$MYEMAIL"
+      "$HOME"/.local/bin/git config --global core.editor vim
+   fi
+}
+
 config () {
    # you will not run this as root
    [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." && exit 0
@@ -134,7 +167,9 @@ config () {
    bashConfig
    gnomeConfig
    keyboard
-   say "Installation finished." ; echo
+   configBinaries
+   configPython
+   say "Configuration finished." ; echo
 }
 
 # the same as "config", but say "yes" to every question
@@ -156,11 +191,11 @@ configYes () {
    echo "Configuring GNOME..."
    keyboard "y"
    echo "Configuring keyboard..."
+   configBinaries "y"
+   echo "Configuring binaries..."
+   configPython "y"
+   echo "Configuring python..."
    say "Installation finished." ; echo
-}
-
-configPython () {
-   "$KOKO"/python/pylibs.sh
 }
 
 backup () {
@@ -192,7 +227,7 @@ while getopts ":hybB" option; do
          displayHelp && exit 0
          exit 1;;
       y)
-         configYes && configPython && exit 0
+         configYes && exit 0
          exit 1;;
       b)
          backup && exit 0
@@ -207,6 +242,6 @@ while getopts ":hybB" option; do
 done
 
 if [ "$OPTIND" = 1 ]; then
-   config && configPython && exit 0
+   config && exit 0
    exit 1
 fi
