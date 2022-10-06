@@ -32,7 +32,7 @@ displayHelp () {
    echo "OPTIONS"
    echo "-h    Print this help message."
    echo "-y    Run as default, but say yes to every question."
-   echo "-b    Backup files to this git directory \$KOKO."
+   echo "-b    Backup files to this directory \$KOKO."
    echo "-B    Backup as \"-b\", but say yes to every question."
 }
 
@@ -84,13 +84,12 @@ gnomeConfig () {
       _GNOME="$1"
    fi
    if [ "$_GNOME" = "y" ]; then
-      sed -i "s|HOMEPLACEHOLDER|${HOME}|" dconf.in
       WALLPAPER="$(realpath "$(find "$KOKO"/gnome -name "wallpaper.*" | sed 1q)")"
-      sed -i "s|WALLPAPERPLACEHOLDER|${WALLPAPER}|" dconf.in
-      dconf load / < "$KOKO"/gnome/dconf.in
+      sed "s|HOMEPLACEHOLDER|${HOME}|;
+           s|WALLPAPERPLACEHOLDER|${WALLPAPER}|" "$KOKO"/gnome/dconf.in | dconf load /
       [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
       cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
-      say "If you wish to store GNOME configurations, run ./koko -B"
+      say "If you wish to store GNOME configurations, run ./koko -b"
       echo "export TERMINAL=\"gnome-terminal\"" >> "$HOME"/.bashrc
       echo "export TERMCMD=\"gnome-terminal\"" >> "$HOME"/.bashrc
    fi
@@ -142,16 +141,17 @@ configBinaries () {
       mkdir -p "$KOKO"/root && cd "$KOKO"/root || exit 1
       apt-get download xclip && dpkg -x xclip*.deb "$KOKO"/root
       apt-get download git && dpkg -x git*.deb "$KOKO"/root
-      for file in "$KOKO"/root/usr/bin/*; do
-         # copy all files that are not symlinks and are executable
-         [ ! -L "$file" ] && [ -x "$file" ] && cp "$file" "$HOME"/.local/bin
-      done
+      cp -r "$KOKO"/root/usr/. "$HOME"/.local   # copying all software files to ~/.local
       # configuring git
       [ -z "$MYNAME" ] && MYNAME="Mateus Marques"
       [ -z "$MYEMAIL" ] && MYEMAIL="mateusmarques2001@usp.br"
-      "$HOME"/.local/bin/git config --global user.name "$MYNAME"
-      "$HOME"/.local/bin/git config --global user.name "$MYEMAIL"
-      "$HOME"/.local/bin/git config --global core.editor vim
+      { echo "[user]";
+        echo "    name = $MYNAME";
+        echo "    email = $MYEMAIL";
+        echo "[core]";
+        echo "    editor = vim";
+        echo "[init]";
+        echo "    templatedir = $HOME/.local/share/git-core/templates"; } > "$HOME"/.gitconfig
    fi
 }
 

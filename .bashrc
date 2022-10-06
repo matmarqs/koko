@@ -59,7 +59,6 @@ alias \
 alias \
     py="python3" \
     python="python3" \
-    pip="pip3" \
     v="vim" \
     vi="vim" \
     nvi="vim" \
@@ -70,7 +69,7 @@ alias \
     pg="ps aux | grep -i" \
     chx="chmod +x" \
     clip="xclip -i -selection clipboard" \
-    tk="cat \$KOKO/token" \
+    tk="cat \$KOKO/token | xclip -i -selection clipboard" \
     ka="killall" \
     p="ping -c 3 google.com" \
     cptex="cp \$KOKO/templates/*.tex ." \
@@ -87,8 +86,21 @@ export LESS_TERMCAP_se=$'\E[0m'          # end standout-mode
 export LESS="-R"
 export MANPAGER="less -R"
 
-# environmental variables
-export RANGER_LOAD_DEFAULT_RC="FALSE"  # ranger config file
+# environmental variables for software paths
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_DATA_DIRS="$HOME/.local/share:$XDG_DATA_DIRS"
 export IPYTHONDIR="${XDG_DATA_HOME:-$HOME/.local/share}/ipython"
+export PATH="$HOME/.local/lib/git-core:$HOME/.local/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+export C_INCLUDE_PATH="$HOME/.local/include"
+export CPLUS_INCLUDE_PATH="$HOME/.local/include"
+export LIBRARY_PATH="$HOME/.local/lib"
+
+# variables for programs
+export RANGER_LOAD_DEFAULT_RC="FALSE"  # ranger config file
 export EDITOR="vim"
 export BROWSER="firefox"
+export TERMINAL="gnome-terminal"
+export TERMCMD="gnome-terminal"
+
+# github.com/matmarqs/koko
