@@ -23,8 +23,8 @@ configureIPython () {
 }
 
 configureRanger () {
-   [ ! -d "$HOME"/.config ] && mkdir -p "$HOME"/.config
-   cp "$PYDIR"/rc.conf "$HOME"/.config
+   [ ! -d "$HOME"/.config/ranger ] && mkdir -p "$HOME"/.config/ranger
+   cp "$PYDIR"/rc.conf "$HOME"/.config/ranger
 }
 
 # check if pip is installed, if not we install it
