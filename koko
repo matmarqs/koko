@@ -84,9 +84,11 @@ gnomeConfig () {
       _GNOME="$1"
    fi
    if [ "$_GNOME" = "y" ]; then
-      WALLPAPER="$(realpath "$(find "$KOKO"/gnome -name "wallpaper.*" | sed 1q)")"
+      [ ! -d "$HOME"/.config ] && mkdir -p "$HOME"/.config
+      WALLPAPER="$(basename "$(find "$KOKO"/gnome -name "wallpaper.*" | sed 1q)")"
+      cp "$KOKO"/gnome/"$WALLPAPER" "$HOME"/.config
       sed "s|HOMEPLACEHOLDER|${HOME}|;
-           s|WALLPAPERPLACEHOLDER|${WALLPAPER}|" "$KOKO"/gnome/dconf.in | dconf load /
+           s|WALLPAPERPLACEHOLDER|${HOME}/.config/${WALLPAPER}|" "$KOKO"/gnome/dconf.in | dconf load /
       [ -f "$HOME"/.config/mimeapps.list ] && cp "$HOME"/.config/mimeapps.list "$BACKUP"
       cp "$KOKO"/gnome/mimeapps.list "$HOME"/.config
       say "If you wish to store GNOME configurations, run ./koko -b"
