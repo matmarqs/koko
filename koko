@@ -73,7 +73,7 @@ bashConfig () {
       # updating $PATH
       { echo "export KOKO=$KOKO";
         echo "export PATH=\"\$HOME/.local/bin:\$PATH\"";
-        echo "export PYTHONPATH=\"\$KOKO/python\""; } >> "$HOME"/.bashrc
+        echo "export PYTHONPATH=\"\$HOME/.local/lib/py-modules\""; } >> "$HOME"/.bashrc
    fi
 }
 
@@ -131,13 +131,15 @@ configPython () {
 }
 
 configBinaries () {
+   [ ! -d "$HOME"/.local/bin ] && mkdir -p "$HOME"/.local/bin
+   echo "Copying my scripts/binaries to \$HOME/.local/bin..."
+   cp -r "$KOKO"/bin/. "$HOME/.local/bin"
    if [ -z "$1" ]; then
       getAns "y" "n" "Do you want to get some dev binaries?" "_BINARIES"
    else
       _BINARIES="$1"
    fi
    if [ "$_BINARIES" = "y" ]; then
-      [ ! -d "$HOME"/.local/bin ] && mkdir -p "$HOME"/.local/bin
       mkdir -p "$KOKO"/root && cd "$KOKO"/root || exit 1
       apt-get download xclip && dpkg -x xclip*.deb "$KOKO"/root
       apt-get download git && dpkg -x git*.deb "$KOKO"/root
@@ -159,7 +161,7 @@ config () {
    # you will not run this as root
    [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." && exit 0
    # welcome
-   say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup.\""
+   say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup\"."
    getAns "y" "n" "Do you wish to continue?" "_CONTINUE"
    [ "$_CONTINUE" != "y" ] && say "Nothing done." && exit 0
    mkdirBackup
@@ -177,7 +179,7 @@ configYes () {
    # you will not run this as root
    [ "$(id -u)" = 0 ] && echo "Run this installation script as a normal user." && exit 0
    # welcome
-   say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup.\""
+   say "This script will overwrite some of your dotfiles, but it will backup them at \"$KOKO/backup\"."
    say "Since you included the \"-y\" option, we say \"yes\" to every question."
    _CONTINUE="y"
    [ "$_CONTINUE" != "y" ] && say "Nothing done." && exit 0

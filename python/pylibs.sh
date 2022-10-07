@@ -1,7 +1,8 @@
 #!/bin/sh
 
-PYTHONPATH=$(realpath "$(dirname "$0")")  # this is important for the module python3-distutils
-[ -z "$KOKO" ] && KOKO="$(realpath "$PYTHONPATH/..")"
+KOKOPY=$(realpath "$(dirname "$0")")
+[ -z "$KOKO" ] && KOKO="$(realpath "$KOKOPY/..")"
+PYTHONPATH="$HOME/.local/lib/py-modules"  # this is important for the module python3-distutils
 
 getAns () {
    # $1 = opt1, $2 = opt2, $3 = question, $4 = ans
@@ -17,21 +18,30 @@ getAns () {
 configureIPython () {
    [ -z "$IPYTHONDIR" ] && IPYTHONDIR="${XDG_DATA_HOME:-$HOME/.local/share}/.local/share/ipython"
    mkdir -p "$IPYTHONDIR/profile_default/startup"
-   cp "$PYTHONPATH"/ipython_config.py "$IPYTHONDIR/profile_default"
-   cp "$PYTHONPATH"/00-functions.py "$IPYTHONDIR/profile_default/startup"
+   cp "$KOKOPY"/ipython_config.py "$IPYTHONDIR/profile_default"
+   cp "$KOKOPY"/00-functions.py "$IPYTHONDIR/profile_default/startup"
 }
 
 configureRanger () {
    [ ! -d "$HOME"/.config/ranger ] && mkdir -p "$HOME"/.config/ranger
-   cp "$PYTHONPATH"/rc.conf "$HOME"/.config/ranger
+   cp "$KOKOPY"/rc.conf "$HOME"/.config/ranger
 }
+
+getPythonVersion () {
+   PYVERSION=$(python3 --version | awk '{print $2}' | awk -F '.' '{print $1 "." $2;}')
+}
+
+[ ! -d "$PYTHONPATH" ] &&
+mkdir -p "$PYTHONPATH"
+echo "Copying distutils module to PYTHONPATH=\"$PYTHONPATH\"."
+cp -r "$KOKOPY"/distutils "$PYTHONPATH"
 
 # check if pip is installed, if not we install it
 if python3 -m pip --version >/dev/null 2>&1; then
    echo "pip is already installed."
 else
    echo "pip is not installed. We are going to install it."
-   if PYTHONPATH="$PYTHONPATH" "$PYTHONPATH"/get-pip.py --user; then # we are using $PYTHONPATH
+   if PYTHONPATH="$PYTHONPATH" "$KOKOPY"/get-pip.py --user; then # we are using $PYTHONPATH
       echo "pip was installed succesfully."
    else
       echo "There was an error when installing pip." && exit 1
