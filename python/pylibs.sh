@@ -27,9 +27,9 @@ configureRanger () {
    cp "$KOKOPY"/rc.conf "$HOME"/.config/ranger
 }
 
-getPythonVersion () {
-   PYVERSION=$(python3 --version | awk '{print $2}' | awk -F '.' '{print $1 "." $2;}')
-}
+#getPythonVersion () {
+#   PYVERSION=$(python3 --version | awk '{print $2}' | awk -F '.' '{print $1 "." $2;}')
+#}
 
 [ ! -d "$PYTHONPATH" ] &&
 mkdir -p "$PYTHONPATH"
