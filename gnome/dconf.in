@@ -223,7 +223,7 @@ toggle-overview=['<Alt>d']
 enabled=false
 
 [org/gnome/terminal/legacy]
-new-terminal-mode='tab'
+new-terminal-mode='window'
 
 [org/gnome/terminal/legacy/keybindings]
 close-tab='<Primary>w'
