@@ -9,9 +9,9 @@ map k gk
 map $ g$
 
 " normal mode
-"nnoremap <Leader>c :w<CR>:!lualatex<Space>-shell-escape<Space>%<CR><CR>
+nnoremap <Leader>c :w<CR>:!lualatex<Space>-shell-escape<Space>%<CR><CR>
 "nnoremap <LocalLeader>c :w<CR>:!lualatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!lualatex<Space>%<CR><CR>:!lualatex<Space>%<CR><CR>
-nnoremap <Leader>c :w<CR>:!pdflatex<Space>-shell-escape<Space>%<CR><CR>
+"nnoremap <Leader>c :w<CR>:!pdflatex<Space>-shell-escape<Space>%<CR><CR>
 "nnoremap <LocalLeader>c :w<CR>:!pdflatex<Space>%<CR><CR>:!latexmk<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>:!pdflatex<Space>%<CR><CR>
 nnoremap <Leader>C :w<CR>:!make<Space>clean<CR><CR>
 nnoremap <Leader>o :!evince<Space>%:t:r.pdf<Space>&<CR><CR>
