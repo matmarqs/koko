@@ -142,9 +142,19 @@ configBinaries () {
       _BINARIES="$1"
    fi
    if [ "$_BINARIES" = "y" ]; then
-      mkdir -p "$KOKO"/root && cd "$KOKO"/root || exit 1
-      apt-get download xclip && dpkg -x xclip*.deb "$KOKO"/root
-      apt-get download git && dpkg -x git*.deb "$KOKO"/root
+      mkdir -p "$KOKO"/root && cd "$KOKO"/root || exit 1    # cd into $KOKO/root
+      # check if xclip is installed, if not we install it
+      if xclip -version >/dev/null 2>&1; then
+         echo "xclip is already installed."
+      else
+         apt-get download xclip && dpkg -x "$(find . -name xclip*.deb | sed 1q)" .
+      fi
+      # check if git is installed, if not we install it
+      if git --version >/dev/null 2>&1; then
+         echo "git is already installed."
+      else
+         apt-get download git && dpkg -x "$(find . -name git*.deb | sed 1q)" .
+      fi
       cp -r "$KOKO"/root/usr/. "$HOME"/.local   # copying all software files to ~/.local
       # configuring git
       [ -z "$MYNAME" ] && MYNAME="Mateus Marques"
