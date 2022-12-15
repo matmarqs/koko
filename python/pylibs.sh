@@ -36,16 +36,12 @@ mkdir -p "$PYTHONPATH"
 echo "Copying distutils module to PYTHONPATH=\"$PYTHONPATH\"."
 cp -r "$KOKOPY"/distutils "$PYTHONPATH"
 
-# check if pip is installed, if not we install it
-if python3 -m pip --version >/dev/null 2>&1; then
-   echo "pip is already installed."
+# install pip
+echo "installing or upgrading pip..."
+if PYTHONPATH="$PYTHONPATH" "$KOKOPY"/get-pip.py --user; then # we are using $PYTHONPATH
+   echo "pip was installed succesfully."
 else
-   echo "pip is not installed. We are going to install it."
-   if PYTHONPATH="$PYTHONPATH" "$KOKOPY"/get-pip.py --user; then # we are using $PYTHONPATH
-      echo "pip was installed succesfully."
-   else
-      echo "There was an error when installing pip." && exit 1
-   fi
+   echo "There was an error when installing pip." && exit 1
 fi
 
 # python packages for the shell
